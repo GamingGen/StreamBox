@@ -6,7 +6,6 @@ ARG CONFPATH=/usr/local/nginx/conf
 
 # Base
 RUN apt-get update && apt-get install sudo && sudo apt-get -y install nano wget unzip zlib1g-dev build-essential libpcre3 libpcre3-dev libssl-dev
-# RUN sudo apt-get -y remove nginx
 
 # Nginx
 RUN wget "http://nginx.org/download/nginx-$VERSION_NGINX.tar.gz"
