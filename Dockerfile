@@ -21,7 +21,6 @@ RUN cd nginx-$VERSION_NGINX && ./configure --with-http_ssl_module --add-module=.
 
 # conf
 ADD conf/nginxRTMP.conf $CONFPATH/nginxRTMP.conf
-RUN cp $CONFPATH/nginx.conf $CONFPATH/nginx.conf.old
 RUN cat $CONFPATH/nginxRTMP.conf >> $CONFPATH/nginx.conf
 
 # FROM arm32v6/alpine:3.6
