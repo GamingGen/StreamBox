@@ -12,9 +12,10 @@ RUN apt-get update && \
 # Uninstall ffmpeg and compile ffmpeg to use the GPU (with the OpenMAX driver)
 RUN sudo apt-get -y autoremove ffmpeg
 RUN git clone https://github.com/FFmpeg/FFmpeg.git && \
-    cd FFmpeg && \
-    sudo ./configure --arch=armel --target-os=linux --enable-gpl --enable-omx --enable-omx-rpi --enable-nonfree && \
-    sudo make -j4
+git checkout release/3.4
+RUN cd FFmpeg && \
+    sudo ./configure --arch=armel --target-os=linux --enable-gpl --enable-omx --enable-omx-rpi --enable-nonfree
+RUN sudo make -j4
 
 # Nginx
 RUN wget "http://nginx.org/download/nginx-$VERSION_NGINX.tar.gz"
@@ -34,7 +35,8 @@ RUN cd nginx-$VERSION_NGINX && \
 ADD conf/nginxRTMP.conf $CONFPATH/nginxRTMP.conf
 RUN cat $CONFPATH/nginxRTMP.conf >> $CONFPATH/nginx.conf
 
+# FROM resin/rpi-raspbian:stretch
 # FROM arm32v6/alpine:3.6
 
-EXPOSE 80 1935
+EXPOSE 80 1935 3000
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
