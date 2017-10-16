@@ -15,7 +15,9 @@ RUN git clone https://github.com/FFmpeg/FFmpeg.git && \
     cd FFmpeg && \
     git checkout release/3.4 && \
     sudo ./configure --arch=armel --target-os=linux --enable-gpl --enable-omx --enable-omx-rpi --enable-nonfree
-RUN sudo make -j4
+RUN cd FFmpeg && \
+    sudo make -j4 && \
+    sudo make install
 
 # Nginx
 RUN wget "http://nginx.org/download/nginx-$VERSION_NGINX.tar.gz"
