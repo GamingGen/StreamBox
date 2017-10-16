@@ -12,8 +12,8 @@ RUN apt-get update && \
 # Uninstall ffmpeg and compile ffmpeg to use the GPU (with the OpenMAX driver)
 RUN sudo apt-get -y autoremove ffmpeg
 RUN git clone https://github.com/FFmpeg/FFmpeg.git && \
-git checkout release/3.4
-RUN cd FFmpeg && \
+    git checkout release/3.4 && \
+    cd FFmpeg && \
     sudo ./configure --arch=armel --target-os=linux --enable-gpl --enable-omx --enable-omx-rpi --enable-nonfree
 RUN sudo make -j4
 
