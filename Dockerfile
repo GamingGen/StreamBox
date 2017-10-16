@@ -5,7 +5,16 @@ ARG VERSION_NGINX=1.13.6
 ARG CONFPATH=/usr/local/nginx/conf
 
 # Base
-RUN apt-get update && apt-get install sudo && sudo apt-get -y install nano wget unzip zlib1g-dev build-essential libpcre3 libpcre3-dev libssl-dev
+RUN apt-get update && \
+    apt-get install sudo && \
+    sudo apt-get -y install nano wget unzip zlib1g-dev build-essential libpcre3 libpcre3-dev libssl-dev
+
+# Uninstall ffmpeg and compile ffmpeg to use the GPU (with the OpenMAX driver)
+RUN sudo apt-get -y autoremove ffmpeg
+RUN git clone https://github.com/FFmpeg/FFmpeg.git && \
+    cd FFmpeg && \
+    sudo ./configure --arch=armel --target-os=linux --enable-gpl --enable-omx --enable-omx-rpi --enable-nonfree && \
+    sudo make -j4
 
 # Nginx
 RUN wget "http://nginx.org/download/nginx-$VERSION_NGINX.tar.gz"
@@ -15,8 +24,11 @@ RUN wget https://github.com/arut/nginx-rtmp-module/archive/master.zip
 RUN tar -zxvf nginx-$VERSION_NGINX.tar.gz
 RUN unzip master.zip
 
-# Build
-RUN cd nginx-$VERSION_NGINX && ./configure --with-http_ssl_module --add-module=../nginx-rtmp-module-master && make && sudo make install
+# Build Nginx with Rtmp module
+RUN cd nginx-$VERSION_NGINX && \
+    ./configure --with-http_ssl_module --add-module=../nginx-rtmp-module-master && \
+    make && \
+    sudo make install
 
 # conf
 ADD conf/nginxRTMP.conf $CONFPATH/nginxRTMP.conf
