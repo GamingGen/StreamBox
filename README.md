@@ -18,3 +18,6 @@ Run this command if you need to go inside the container :
 
 `sudo docker exec -it StreamBOX1 /bin/bash`
 
+Run this command to start Record :
+
+`ffmpeg -f video4linux2 -i /dev/video0 -an -f flv rtmp://192.168.0.31/live`
