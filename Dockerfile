@@ -13,7 +13,7 @@ RUN apt-get -y autoremove ffmpeg
 RUN git clone https://github.com/FFmpeg/FFmpeg.git && \
     cd FFmpeg && \
     git checkout release/3.4 && \
-    ./configure --arch=armel --target-os=linux --enable-gpl --enable-omx --enable-omx-rpi --enable-nonfree
+    ./configure --arch=armel --target-os=linux --enable-gpl --enable-mmal --enable-omx --enable-omx-rpi --enable-nonfree
 RUN cd FFmpeg && \
     make -j4 && \
     make install
