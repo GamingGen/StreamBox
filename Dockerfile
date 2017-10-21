@@ -6,7 +6,7 @@ ARG CONFPATH=/usr/local/nginx/conf
 
 # Base
 RUN apt-get update && \
-    apt-get -y install nano wget git unzip zlib1g-dev build-essential libpcre3 libpcre3-dev libssl-dev libomxil-bellagio-dev curl libcurl4-openssl-dev
+    apt-get -y install nano wget git unzip zlib1g-dev build-essential libpcre3 libpcre3-dev libssl-dev libomxil-bellagio-dev curl libpcre++-dev libcurl4-openssl-dev
 
 # Uninstall ffmpeg and compile ffmpeg to use the GPU (with the OpenMAX driver)
 RUN apt-get -y autoremove ffmpeg
